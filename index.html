@@ -3,55 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Application Form</title>
+    <title>Join Our Team | Job Application</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: Arial, sans-serif; background: #f4f4f9; display: flex; justify-content: center; padding: 40px 20px; }
-        .form-container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
-        .form-container h2 { margin-top: 0; color: #333; text-align: center;}
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; color: #555; font-weight: bold;}
-        .form-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        /* Honeypot field hidden from humans */
-        .visually-hidden { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            /* Subtle dark/light gradient base */
+            background: #e2e8f0; 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; padding: 40px 20px; color: #333;
+            position: relative;
+            overflow: hidden; /* Prevents scrollbars from moving shapes */
+        }
 
-        button { width: 100%; padding: 12px; background: #0056b3; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s;}
-        button:hover { background: #004494; }
-        button:disabled { background: #cccccc; cursor: not-allowed; }
-        #message { margin-top: 15px; text-align: center; font-weight: bold; }
+        /* --- BACKGROUND ANIMATIONS --- */
+        .background-shapes {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden;
+            z-index: -1; 
+        }
+
+        .shape {
+            position: absolute;
+            filter: blur(70px);
+            opacity: 0.7;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+
+        /* Indigo blob */
+        .shape-1 {
+            width: 400px; height: 400px; background: #4f46e5;
+            top: -10%; left: -10%; border-radius: 50%;
+            animation-duration: 22s;
+        }
+
+        /* Blue/Cyan blob */
+        .shape-2 {
+            width: 500px; height: 500px; background: #38bdf8;
+            bottom: -20%; right: -15%;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; 
+            animation-duration: 28s; animation-direction: alternate-reverse;
+        }
+
+        /* Emerald/Green blob */
+        .shape-3 {
+            width: 300px; height: 300px; background: #10b981;
+            top: 40%; left: 55%;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation-duration: 25s;
+        }
+        
+        /* Purple blob */
+        .shape-4 {
+            width: 350px; height: 350px; background: #8b5cf6;
+            top: 15%; right: 15%; border-radius: 50%;
+            animation-duration: 19s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            33% { transform: translate(40px, -50px) rotate(15deg) scale(1.05); }
+            66% { transform: translate(-30px, 30px) rotate(-10deg) scale(0.95); }
+            100% { transform: translate(60px, 40px) rotate(20deg) scale(1.1); }
+        }
+
+        /* --- GLASSMORPHISM FORM CONTAINER --- */
+        .form-container { 
+            /* Semi-transparent white */
+            background: rgba(255, 255, 255, 0.85); 
+            /* Frosted glass blur effect */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            
+            padding: 40px; border-radius: 20px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+            width: 100%; max-width: 500px; 
+            border: 1px solid rgba(255,255,255,0.6);
+            z-index: 1;
+        }
+
+        .header-section { text-align: center; margin-bottom: 30px; }
+        .header-section h2 { font-size: 26px; font-weight: 700; color: #1e293b; margin-bottom: 8px;}
+        .header-section p { font-size: 14px; color: #64748b; }
+
+        .input-row { display: flex; gap: 15px; margin-bottom: 20px; }
+        .input-row .form-group { flex: 1; margin-bottom: 0; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: #334155;}
+        
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="email"] { 
+            width: 100%; padding: 12px 16px; 
+            border: 2px solid #e2e8f0; border-radius: 10px; 
+            font-size: 15px; font-family: inherit; transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .form-group input:focus { 
+            outline: none; border-color: #4f46e5; 
+            background-color: #fff; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+        }
+
+        .file-upload-wrapper {
+            position: relative; border: 2px dashed #cbd5e1; border-radius: 10px;
+            padding: 30px; text-align: center; background-color: rgba(248, 250, 252, 0.8);
+            transition: all 0.3s ease; cursor: pointer;
+        }
+        .file-upload-wrapper:hover { border-color: #4f46e5; background-color: rgba(241, 245, 249, 0.9); }
+        .file-upload-wrapper input[type="file"] {
+            position: absolute; left: 0; top: 0; height: 100%; width: 100%;
+            opacity: 0; cursor: pointer;
+        }
+        .file-upload-text { font-size: 14px; color: #64748b; font-weight: 500; }
+        .file-upload-text span { color: #4f46e5; font-weight: 600; text-decoration: underline;}
+        #fileNameDisplay { display: block; margin-top: 10px; font-size: 13px; color: #10b981; font-weight: 600;}
+
+        .visually-hidden { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+        button { 
+            width: 100%; padding: 15px; margin-top: 10px;
+            background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%); 
+            color: white; border: none; border-radius: 10px; 
+            font-size: 16px; font-weight: 600; cursor: pointer; 
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4); }
+        button:disabled { background: #94a3b8; box-shadow: none; cursor: not-allowed; transform: none;}
+        
+        #message { margin-top: 20px; text-align: center; font-weight: 600; font-size: 14px; padding: 12px; border-radius: 8px;}
+        .msg-success { background-color: rgba(209, 250, 229, 0.9); color: #065f46; border: 1px solid #10b981; }
+        .msg-error { background-color: rgba(254, 226, 226, 0.9); color: #991b1b; border: 1px solid #ef4444; }
     </style>
 </head>
 <body>
 
+<div class="background-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+</div>
+
 <div class="form-container">
-    <h2>Job Application</h2>
+    <div class="header-section">
+        <h2>Submit Your Application</h2>
+        <p>Join our team by filling out the details below.</p>
+    </div>
+
     <form id="jobForm">
-        
         <div class="visually-hidden" aria-hidden="true">
-            <label for="botCatch">If you are human, leave this blank.</label>
             <input type="text" id="botCatch" name="botCatch" tabindex="-1">
         </div>
 
-        <div class="form-group">
-            <label for="firstName">First Name</label>
-            <input type="text" id="firstName" required>
+        <div class="input-row">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" placeholder="John" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" placeholder="Doe" required>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" required>
-        </div>
+
         <div class="form-group">
             <label for="mobileNumber">Mobile Number</label>
-            <input type="tel" id="mobileNumber" pattern="[0-9]{10,15}" title="Please enter a valid phone number" required>
+            <input type="tel" id="mobileNumber" placeholder="+1 (555) 000-0000" pattern="[0-9]{10,15}" title="Please enter a valid phone number" required>
         </div>
+
         <div class="form-group">
             <label for="emailAddress">Email Address</label>
-            <input type="email" id="emailAddress" required>
+            <input type="email" id="emailAddress" placeholder="john.doe@example.com" required>
         </div>
+
         <div class="form-group">
-            <label for="resume">Upload Resume (PDF or DOC only)</label>
-            <input type="file" id="resume" accept=".pdf,.doc,.docx" required>
+            <label>Resume (PDF or DOC)</label>
+            <div class="file-upload-wrapper">
+                <div class="file-upload-text">
+                    Drop your resume here or <span>browse files</span>
+                </div>
+                <input type="file" id="resume" accept=".pdf,.doc,.docx" required>
+                <span id="fileNameDisplay"></span> 
+            </div>
         </div>
+
         <button type="submit" id="submitBtn">Submit Application</button>
         <div id="message"></div>
     </form>
@@ -61,25 +202,34 @@
     const form = document.getElementById('jobForm');
     const messageDiv = document.getElementById('message');
     const submitBtn = document.getElementById('submitBtn');
+    const fileInput = document.getElementById('resume');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
 
     // 🔴 Paste your Web App URL here
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzw0gEYpLd4L5EVqqtMPR9JUhPWb7zk_X8Uqv2BRZOS9aBOUCQ87RIDP9Xfy9ndWN8G3w/exec';
 
+    // Update UI to show the selected file name
+    fileInput.addEventListener('change', function() {
+        if(this.files && this.files[0]) {
+            fileNameDisplay.innerText = "Selected: " + this.files[0].name;
+        } else {
+            fileNameDisplay.innerText = "";
+        }
+    });
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // UI loading state
         submitBtn.disabled = true;
-        submitBtn.innerText = 'Encrypting & Uploading...';
+        submitBtn.innerText = 'Uploading Application...';
+        messageDiv.className = '';
         messageDiv.innerText = '';
 
-        const fileInput = document.getElementById('resume');
         const file = fileInput.files[0];
 
-        // Frontend Security: Limit file size to 5MB to prevent abuse
         if (file && file.size > 5 * 1024 * 1024) {
             messageDiv.innerText = 'File is too large. Maximum size is 5MB.';
-            messageDiv.style.color = 'red';
+            messageDiv.className = 'msg-error';
             submitBtn.disabled = false;
             submitBtn.innerText = 'Submit Application';
             return;
@@ -95,7 +245,7 @@
                     lastName: document.getElementById('lastName').value,
                     mobileNumber: document.getElementById('mobileNumber').value,
                     emailAddress: document.getElementById('emailAddress').value,
-                    botCatch: document.getElementById('botCatch').value, // Send honeypot data
+                    botCatch: document.getElementById('botCatch').value,
                     fileName: file.name,
                     mimeType: file.type,
                     fileBase64: base64Data
@@ -110,15 +260,16 @@
                     const result = await response.json();
 
                     if(result.status === "success") {
-                        messageDiv.innerText = 'Application submitted securely!';
-                        messageDiv.style.color = 'green';
+                        messageDiv.innerText = 'Application submitted successfully!';
+                        messageDiv.className = 'msg-success';
                         form.reset();
+                        fileNameDisplay.innerText = ''; 
                     } else {
                         throw new Error(result.message);
                     }
                 } catch (error) {
-                    messageDiv.innerText = 'Security check failed or network error.';
-                    messageDiv.style.color = 'red';
+                    messageDiv.innerText = 'Network error. Please try again.';
+                    messageDiv.className = 'msg-error';
                 } finally {
                     submitBtn.disabled = false;
                     submitBtn.innerText = 'Submit Application';
