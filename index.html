@@ -15,14 +15,11 @@
             display: flex; justify-content: center; align-items: center; 
             min-height: 100vh; padding: 40px 20px; color: #333;
             position: relative;
-            
-            /* FIXED: Allow vertical scrolling, but hide horizontal scrolling */
-            overflow-x: hidden; 
+            overflow-x: hidden; /* Prevents horizontal scroll on mobile */
         }
 
         /* --- BACKGROUND ANIMATIONS --- */
         .background-shapes {
-            /* FIXED: Changed to 'fixed' so the background stays put when you scroll */
             position: fixed; 
             top: 0; left: 0; width: 100%; height: 100%;
             overflow: hidden;
@@ -36,35 +33,10 @@
             animation: float 20s infinite alternate ease-in-out;
         }
 
-        /* Indigo blob */
-        .shape-1 {
-            width: 400px; height: 400px; background: #4f46e5;
-            top: -10%; left: -10%; border-radius: 50%;
-            animation-duration: 22s;
-        }
-
-        /* Blue/Cyan blob */
-        .shape-2 {
-            width: 500px; height: 500px; background: #38bdf8;
-            bottom: -20%; right: -15%;
-            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; 
-            animation-duration: 28s; animation-direction: alternate-reverse;
-        }
-
-        /* Emerald/Green blob */
-        .shape-3 {
-            width: 300px; height: 300px; background: #10b981;
-            top: 40%; left: 55%;
-            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-            animation-duration: 25s;
-        }
-        
-        /* Purple blob */
-        .shape-4 {
-            width: 350px; height: 350px; background: #8b5cf6;
-            top: 15%; right: 15%; border-radius: 50%;
-            animation-duration: 19s;
-        }
+        .shape-1 { width: 400px; height: 400px; background: #4f46e5; top: -10%; left: -10%; border-radius: 50%; animation-duration: 22s; }
+        .shape-2 { width: 500px; height: 500px; background: #38bdf8; bottom: -20%; right: -15%; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; animation-duration: 28s; animation-direction: alternate-reverse; }
+        .shape-3 { width: 300px; height: 300px; background: #10b981; top: 40%; left: 55%; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; animation-duration: 25s; }
+        .shape-4 { width: 350px; height: 350px; background: #8b5cf6; top: 15%; right: 15%; border-radius: 50%; animation-duration: 19s; }
 
         @keyframes float {
             0% { transform: translate(0, 0) rotate(0deg) scale(1); }
@@ -83,8 +55,6 @@
             width: 100%; max-width: 500px; 
             border: 1px solid rgba(255,255,255,0.6);
             z-index: 1;
-            
-            /* Add margin to ensure it looks good when scrolled */
             margin: 20px 0; 
         }
 
@@ -95,12 +65,6 @@
         .input-row { display: flex; gap: 15px; margin-bottom: 20px; }
         .input-row .form-group { flex: 1; margin-bottom: 0; }
         
-        /* Stack inputs on very small mobile screens */
-        @media (max-width: 480px) {
-            .input-row { flex-direction: column; gap: 0; }
-            .input-row .form-group { margin-bottom: 20px; }
-        }
-
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: #334155;}
         
@@ -130,7 +94,7 @@
         }
         .file-upload-text { font-size: 14px; color: #64748b; font-weight: 500; }
         .file-upload-text span { color: #4f46e5; font-weight: 600; text-decoration: underline;}
-        #fileNameDisplay { display: block; margin-top: 10px; font-size: 13px; color: #10b981; font-weight: 600;}
+        #fileNameDisplay { display: block; margin-top: 10px; font-size: 13px; color: #10b981; font-weight: 600; word-break: break-all;}
 
         .visually-hidden { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 
@@ -148,6 +112,30 @@
         #message { margin-top: 20px; text-align: center; font-weight: 600; font-size: 14px; padding: 12px; border-radius: 8px;}
         .msg-success { background-color: rgba(209, 250, 229, 0.9); color: #065f46; border: 1px solid #10b981; }
         .msg-error { background-color: rgba(254, 226, 226, 0.9); color: #991b1b; border: 1px solid #ef4444; }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 600px) {
+            body { 
+                padding: 15px 10px; /* Reduce outer margins */
+            }
+            .form-container { 
+                padding: 25px 20px; /* Reduce inner padding on mobile */
+                margin: 10px 0;
+            }
+            .header-section h2 { 
+                font-size: 22px; /* Scale down title */
+            }
+            .input-row { 
+                flex-direction: column; /* Stack first/last name vertically */
+                gap: 0; 
+            }
+            .input-row .form-group { 
+                margin-bottom: 20px; 
+            }
+            .file-upload-wrapper {
+                padding: 20px 15px; /* Scale down drop zone */
+            }
+        }
     </style>
 </head>
 <body>
